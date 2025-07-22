@@ -3,6 +3,8 @@ defmodule SingPi.MixProject do
 
   @app :sing_pi
   @version "0.1.0"
+  @target System.get_env("MIX_TARGET") || "host"  # 添加这行
+  
   @all_targets [
     :rpi,
     :rpi0,
@@ -17,6 +19,9 @@ defmodule SingPi.MixProject do
     :grisp2,
     :mangopi_mq_pro
   ]
+  
+  # 添加这行
+  @target_non_host @all_targets
 
   def project do
     [
@@ -25,6 +30,8 @@ defmodule SingPi.MixProject do
       elixir: "~> 1.18",
       archives: [nerves_bootstrap: "~> 1.13"],
       start_permanent: Mix.env() == :prod,
+      build_embedded: true,  # 添加这行
+      target: @target,       # 添加这行
       deps: deps(),
       releases: [{@app, release()}],
       preferred_cli_target: [run: :host, test: :host]
@@ -48,11 +55,8 @@ defmodule SingPi.MixProject do
       {:ring_logger, "~> 0.11.0"},
       {:toolshed, "~> 0.4.0"},
 
-      # Allow Nerves.Runtime on host to support development, testing and CI.
-      # See config/host.exs for usage.
-      {:nerves_runtime, "~> 0.13.0"},
-
-      # Dependencies for all targets except :host
+      # Dependencies for all targets except host
+      {:nerves_runtime, "~> 0.13.0", targets: @target_non_host},  # 修改这行
       {:nerves_pack, "~> 0.7.1", targets: @all_targets},
 
       # Dependencies for specific targets
@@ -72,19 +76,19 @@ defmodule SingPi.MixProject do
       {:nerves_system_x86_64, "~> 1.24", runtime: false, targets: :x86_64},
       {:nerves_system_grisp2, "~> 0.8", runtime: false, targets: :grisp2},
       {:nerves_system_mangopi_mq_pro, "~> 0.6", runtime: false, targets: :mangopi_mq_pro},
-      {:dotenvy, "~> 1.0.0"},
+      # 在 deps 函数中移除这一行：
+      # {:dotenvy, "~> 1.0.0"},
     ]
   end
 
   def release do
     [
       overwrite: true,
-      # Erlang distribution is not started automatically.
-      # See https://hexdocs.pm/nerves_pack/readme.html#erlang-distribution
       cookie: "#{@app}_cookie",
       include_erts: &Nerves.Release.erts/0,
       steps: [&Nerves.Release.init/1, :assemble],
-      strip_beams: Mix.env() == :prod or [keep: ["Docs"]]
+      strip_beams: Mix.env() == :prod or [keep: ["Docs"]],
+      rootfs_overlay: "rootfs_overlay"  # 添加这行
     ]
   end
 end

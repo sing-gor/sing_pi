@@ -25,18 +25,13 @@ defmodule SingPi.Application do
     defp target_children() do
       [
         # Children that only run on the host during development or test.
-        # In general, prefer using `config/host.exs` for differences.
-        #
-        # Starts a worker by calling: Host.Worker.start_link(arg)
-        # {Host.Worker, arg},
       ]
     end
   else
     defp target_children() do
       [
-        # Children for all targets except host
-        # Starts a worker by calling: Target.Worker.start_link(arg)
-        # {Target.Worker, arg},
+        # 启动网络监控器，确保Wi-Fi自动连接
+        {SingPi.NetworkMonitor, []}
       ]
     end
   end

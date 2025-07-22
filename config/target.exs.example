@@ -41,7 +41,7 @@ config :nerves_ssh,
   authorized_keys: Enum.map(keys, &File.read!/1) ++ [
   ],
   user_passwords: [
-    {"admin", "qwer1234"},
+    {"admin", "your_ssh_password_here"},
   ]
 
 # Configure the network using vintage_net
@@ -50,7 +50,7 @@ config :nerves_ssh,
 #
 # See https://github.com/nerves-networking/vintage_net for more information
 config :vintage_net,
-  regulatory_domain: "CN",
+  regulatory_domain: "YOUR_COUNTRY_CODE",
   config: [
     {"usb0", %{type: VintageNetDirect}},
     {"eth0",
@@ -64,8 +64,8 @@ config :vintage_net,
         networks: [
           %{
             key_mgmt: :wpa_psk,
-            ssid: "AI龙马_2.4",
-            psk: "ailongma.com",
+            ssid: "YOUR_WIFI_SSID",
+            psk: "YOUR_WIFI_PASSWORD",
           },
         ]
       },

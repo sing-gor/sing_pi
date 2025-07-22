@@ -24,6 +24,16 @@ erl_crash.dump
 .env.local
 .env.*.local
 
+# Configuration files (use .example versions instead)
+config/config.exs
+config/host.exs
+config/target.exs
+
+# Nerves firmware files
+*.fw
+*.img
+*.fwup
+
 # macOS
 .DS_Store
 .DS_Store?
