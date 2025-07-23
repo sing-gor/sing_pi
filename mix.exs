@@ -8,6 +8,7 @@ defmodule SingPi.MixProject do
   @all_targets [
     :rpi,
     :rpi0,
+    :rpi0_2,  # 添加这一行
     :rpi2,
     :rpi3,
     :rpi3a,
@@ -66,6 +67,7 @@ defmodule SingPi.MixProject do
       # changes to your application are needed.
       {:nerves_system_rpi, "~> 1.24", runtime: false, targets: :rpi},
       {:nerves_system_rpi0, "~> 1.24", runtime: false, targets: :rpi0},
+      {:nerves_system_rpi0_2, "~> 1.31", runtime: false, targets: :rpi0_2},  # 添加这一行
       {:nerves_system_rpi2, "~> 1.24", runtime: false, targets: :rpi2},
       {:nerves_system_rpi3, "~> 1.24", runtime: false, targets: :rpi3},
       {:nerves_system_rpi3a, "~> 1.24", runtime: false, targets: :rpi3a},

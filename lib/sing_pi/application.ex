@@ -29,10 +29,7 @@ defmodule SingPi.Application do
     end
   else
     defp target_children() do
-      [
-        # 启动网络监控器，确保Wi-Fi自动连接
-        {SingPi.NetworkMonitor, []}
-      ]
+      []
     end
   end
 end
